@@ -1,0 +1,19 @@
+/*
+Theme Name: nilooweb
+Theme URI: https://nilooweb.ir
+Author: Nilooweb Creative Agency
+Author URI: https://nilooweb.ir
+Description: Nilooweb Creative Agency
+Version: 1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: nilooweb
+*/
+
+.player video{
+	width: 60%;
+	height: auto;
+}
+.player {
+    text-align: center;
+}
