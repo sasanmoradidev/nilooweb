@@ -59,12 +59,18 @@ if ( post_password_required() ) {
 				 	?>
 				</div>
 			</div>
+			<div class="rating-single">
+				<?php do_action('woocommerce_single_product_rating'); ?>
+			</div>
+			<div class="price-box">
+				<?php do_action('woocommerce_single_product_price'); ?>
+			</div>
 			<?php
 			/**
 			 * Hook: woocommerce_single_product_summary.
 			 *
-			 * @hooked woocommerce_template_single_rating - 10
-			 * @hooked woocommerce_template_single_price - 10
+			 * @hooked woocommerce_template_single_rating - 10 - replaced
+			 * @hooked woocommerce_template_single_price - 10 - replaced
 			 * @hooked woocommerce_template_single_excerpt - 20 -removed
 			 * @hooked woocommerce_template_single_add_to_cart - 30
 			 * @hooked woocommerce_template_single_meta - 40

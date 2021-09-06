@@ -43,10 +43,9 @@ $logo = $options['logo']['url'];
               <div class="header-submenu" id="cartMenu">
 							<?php woocommerce_mini_cart(); ?>
 							</div>
-              <button class="wishlist-btn notauthorized">
+              <a href="<?php echo get_the_permalink($options['wishlisturl']); ?>" class="wishlist-btn notauthorized">
               	<span class="font-icon icon-fav-bt"></span>
-              </button>
-
+              </a>
                 <div class="profile-container notauthorized">
                     <div class="profile">
                         <span class="icon-profile-bt font-icon"></span>
@@ -75,9 +74,10 @@ $logo = $options['logo']['url'];
               </div>
 
               <div class="search-box">
-                  <form method="get" action="<?php  echo get_bloginfo('url'); ?>/search">
+                  <form method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="searchbar">
                       <inpuy type="submit" id="search-btn"><span class="font-icon icon-search-header"></span></inpuy>
-                      <input type="text" name="q" id="search-input" placeholder="جستجو..." autocomplete="off">
+                      <input type="text" name="s" id="search-input" placeholder="<?php echo get_search_query(); ?>" autocomplete="off">
+											<input type="hidden" name="post_type" value="product" />
                   </form>
               </div>
 
@@ -106,9 +106,23 @@ $logo = $options['logo']['url'];
             </div>
 
             <nav class="navigation-catrgories">
-                <ul class="main-list">
-
-                </ul>
+									<?php
+									//Top Menu
+									if (has_nav_menu('main')) {
+										$defaults = array(
+										'theme_location'  => 'main',
+										'container'       => '',
+										'menu_class'      => 'main-list',
+										'menu_id'         => 'mymenu',
+										'echo'            => true,
+										'fallback_cb'     => 'wp_page_menu',
+										'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+										'depth'           => 2,
+										'walker' => new IBenic_Walker(),
+										);
+										wp_nav_menu( $defaults );
+									}
+									?>
             </nav>
 
 

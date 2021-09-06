@@ -12,5 +12,6 @@ get_template_part('templates/pages/artworks');
 
 ?>
 <?php
-get_footer('inner'); 
+get_footer('inner');
+
 ?>

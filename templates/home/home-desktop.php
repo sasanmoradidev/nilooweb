@@ -129,8 +129,10 @@ $site_title = get_bloginfo( 'name' );
        				);
        				$posts = new WP_Query( $args );
        					if( $posts->have_posts() ):
+
        						while( $posts->have_posts() ) : $posts->the_post();
                   //$thumbnail = get_the_post_thumbnail_url('full');
+                  $product = wc_get_product( get_the_ID() );
        						?>
 
                   <div class="item">
@@ -138,7 +140,11 @@ $site_title = get_bloginfo( 'name' );
               			  <a href="<?php echo get_the_permalink(); ?>" class="product-card-img-link">
               			  <img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'products_desktop');?>" alt="<?php echo get_the_title(); ?>" title="<?php echo get_the_title(); ?>" class="product-card-img hover-hide">
               			  <img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'products_desktop');?>" alt="<?php echo get_the_title(); ?>" title="<?php echo get_the_title(); ?>" class="product-card-img hover-show">
-              			  <span class="product-card-over-img"></span><span class="product-card-discount"><?php echo '%'.price_off(); ?> </span></a>
+              			  <span class="product-card-over-img"></span>
+                      <?php if(price_off()){ ?>
+                      <span class="product-card-discount"><?php echo '%'.price_off(); ?> </span>
+                      <?php } ?>
+                    </a>
               			  <div class="product-card-hover">
               				 <ul class="product-card-hover-icon">
               					<li class="product-card-like" data-product-id="227481"><? echo do_shortcode('[yith_wcwl_add_to_wishlist]'); ?></li>
@@ -153,7 +159,7 @@ $site_title = get_bloginfo( 'name' );
               			  <p><a href="#" class="product-card-brand-lastprice"><span class="product-card-brand">Deco</span><span class="product-card-lastprice"><?php echo get_post_meta( get_the_ID(), '_regular_price', true); ?> تومان</span></a></p>
               			  <p><a href="#" class="product-card-name-price"><span class="product-card-name"><?php echo get_the_title(); ?></span><span class="product-card-price"><?php echo get_post_meta( get_the_ID(), '_price', true); ?> تومان</span></a></p>
               			  <ul class="product-card-size">
-              				 <li><a href="#">تک سایز</a></li>
+              				 <li><a href="#"><?php echo $product->get_price_html(); ?></a></li>
               			  </ul>
               		   </div>
               		</div>
@@ -261,7 +267,11 @@ $site_title = get_bloginfo( 'name' );
                 <a href="<?php echo get_the_permalink(); ?>" class="product-card-img-link">
                 <img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'products_desktop');?>" alt="<?php echo get_the_title(); ?>" title="<?php echo get_the_title(); ?>" class="product-card-img hover-hide">
                 <img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'products_desktop');?>" alt="<?php echo get_the_title(); ?>" title="<?php echo get_the_title(); ?>" class="product-card-img hover-show">
-                <span class="product-card-over-img"></span><span class="product-card-discount"><?php echo '%'.price_off(); ?> </span></a>
+                <span class="product-card-over-img"></span>
+                <?php if(price_off()){ ?>
+                <span class="product-card-discount"><?php echo '%'.price_off(); ?> </span>
+                <?php } ?>
+                </a>
                 <div class="product-card-hover">
                  <ul class="product-card-hover-icon">
                   <li class="product-card-like" data-product-id="227481"><? echo do_shortcode('[yith_wcwl_add_to_wishlist]'); ?></li>

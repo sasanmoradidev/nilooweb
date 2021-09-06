@@ -23,9 +23,8 @@ $template = wc_get_theme_slug_for_templates();
 
 switch ( $template ) {
 	case 'nilooweb':
-		echo '</div></div>';
+		echo '</div></main></div>';
 		break;
-switch ( $template ) {
 	case 'twentyten':
 		echo '</div></div>';
 		break;

@@ -22,9 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $template = wc_get_theme_slug_for_templates();
 switch ( $template ) {
 	case 'nilooweb':
-		echo '<div id="container"><div id="content" role="main">';
+		echo '<div id="filter-page" class="clearfix"><main><div id="main-content" class="container">';
 		break;
-switch ( $template ) {
 	case 'twentyten':
 		echo '<div id="container"><div id="content" role="main">';
 		break;

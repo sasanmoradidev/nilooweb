@@ -37,11 +37,15 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 		<div class="col2-set" id="customer_details">
 			<div class="col-12">
+				<div class="profile-box" id="account-form">
 				<?php do_action( 'woocommerce_checkout_billing' ); ?>
+				</div>
 			</div>
 
 			<div class="col-12">
+				<div class="profile-box" id="account-form">
 				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+				</div>
 			</div>
 		</div>
 

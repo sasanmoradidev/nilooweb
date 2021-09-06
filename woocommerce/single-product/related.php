@@ -41,8 +41,7 @@ if ( $related_products ) : ?>
 					<span class="font-icon icon-arrow-left-pdp"></span>
 				</button>
 				<div class="owl-carousel owl-product">
-
-				<?php //woocommerce_product_loop_start(); ?>
+			 <?php //woocommerce_product_loop_start(); ?>
 
 				<?php foreach ( $related_products as $related_product ) : ?>
 
@@ -50,6 +49,7 @@ if ( $related_products ) : ?>
 						$post_object = get_post( $related_product->get_id() );
 
 						setup_postdata( $GLOBALS['post'] =& $post_object ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
+						// print_r($related_products);
 
 						wc_get_template_part( 'content', 'related' );
 						?>

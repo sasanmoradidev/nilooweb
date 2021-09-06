@@ -49,24 +49,41 @@ $col    = 1;
 <?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
 	<div class="u-columns woocommerce-Addresses col2-set addresses">
 <?php endif; ?>
-
 <?php foreach ( $get_addresses as $name => $address_title ) : ?>
+
 	<?php
 		$address = wc_get_account_formatted_address( $name );
 		$col     = $col * -1;
 		$oldcol  = $oldcol * -1;
-	?>
+		$customer = new WC_Customer( $customer_id );
+?>
 
-	<div class="u-column<?php echo $col < 0 ? 1 : 2; ?> col-<?php echo $oldcol < 0 ? 1 : 2; ?> woocommerce-Address">
-		<header class="woocommerce-Address-title title">
-			<h3><?php echo esc_html( $address_title ); ?></h3>
-			<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" class="edit"><?php echo $address ? esc_html__( 'Edit', 'woocommerce' ) : esc_html__( 'Add', 'woocommerce' ); ?></a>
-		</header>
-		<address>
-			<?php
-				echo $address ? wp_kses_post( $address ) : esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' );
-			?>
-		</address>
+<p><?php //print_r(get_user_meta($customer_id)); ?></p>
+	<div class="address-list-box">
+	  <div class="list-title-link">
+	    <p class="profile-title"><?php echo esc_html( $address_title ); ?></p>
+	    <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" class="edit btn-green"><?php echo $address ? esc_html__( 'Edit', 'woocommerce' ) : esc_html__( 'Add', 'woocommerce' ); ?></a>
+	  </div>
+	  <div class="table-list">
+	    <table>
+	      <thead>
+	        <tr>
+	          <th>نام تحویل گیرنده</th>
+						<th>تلفن تماس</th>
+						<th>کد پستی</th>
+	          <th width="40%">آدرس</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr class="address-item-container">
+	          <td><?php echo ($customer->get_display_name()); ?></td>
+						<td><?php echo ($customer->get_billing_phone()); ?></td>
+						<td><?php echo ($customer->get_billing_postcode()); ?></td>
+	          <td width="60%"><?php echo ($customer->get_billing_address_1() . ' ' . $customer->get_billing_address_2()); ?></td>
+	        </tr>
+	      </tbody>
+	    </table>
+	  </div>
 	</div>
 
 <?php endforeach; ?>

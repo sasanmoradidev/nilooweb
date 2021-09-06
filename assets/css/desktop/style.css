@@ -133,3 +133,161 @@
     background-color: #fff;
     color: #96588a;
 }
+.product-summary-section .product-name-price-share .product-name-price .product-name {
+    justify-content: center;
+}
+h1.product_title.entry-title {
+    font-size: 22px;
+}
+p.price > span > bdi{
+  color: #00bf6f;
+}
+p.price{
+  font-size: 28px;
+    font-weight: bold;
+    margin-left: 11px;
+    margin-top: 60px;
+}
+p.price del{
+  margin-left: 15px;
+  color: #666;
+}
+p.price ins {
+    color: #00bf6f;
+    text-decoration: initial;
+}
+.woocommerce-variation-add-to-cart.variations_button.woocommerce-variation-add-to-cart-disabled, .woocommerce-variation-add-to-cart.variations_button.woocommerce-variation-add-to-cart-enabled {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    margin: 30px 0;
+}
+.woocommerce form.cart button.button.alt.disabled {
+    background-color: #00bf6f;
+    color: #fff;
+}
+.woocommerce form.cart button.button.alt {
+    background-color: #00bf6f;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+}
+.woocommerce form.cart button.button.alt:hover{
+    background-color: #009657;
+    color: #fff;
+}
+form.cart .single_add_to_cart_button{
+padding: 1.118em 3.7em!important;
+margin-right: 25px!important;
+}
+form.cart{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  margin: 30px 0;
+}
+form.variations_form.cart{
+  display: block;
+}
+.sort-filters a {
+    color: #1d1d1d;
+}
+#filter-page #product_list {
+    width: initial;
+}
+#profile-sidebar ul li a.is-active, #profile-sidebar ul li:hover {
+    background-color: #f8f8f8;
+    border-radius: 16px;
+}
+.woocommerce-account-content {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 30px 15px;
+    margin-bottom: 40px;
+}
+#account-form .form-row{
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-transition: 2s all;
+    -o-transition: 2s all;
+    transition: 2s all;
+    margin: 16px 0;
+    max-width: 45%;
+    z-index: 0;
+}
+#account-form .form-row label {
+    position: absolute;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: right;
+    color: #000;
+    z-index: 1;
+    right: 12px;
+    background-color: #fff;
+    top: -9px;
+    padding: 0 3px;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -ms-transition: 0.3s;
+    -o-transition: 0.3s;
+}
+#account-form .form-row input {
+    height: 50px;
+    border-radius: 12px;
+    border: 1px solid #c5c7cd;
+    padding: 8px 10px 0 14px;
+    line-height: 50px;
+    color: #222;
+    font-size: 13px;
+    background: transparent;
+}
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+        height: 43px;
+        padding-top: 10px;
+        border: 1px solid #c5c7cd;
+        border-radius: 12px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 42px;
+    top: 1px;
+}
+.checkout #order_comments{
+    padding-top: 14px;
+    min-height: 110px;
+}
+
+.woocommerce #content table.cart td.actions .coupon, .woocommerce table.cart td.actions .coupon, .woocommerce-page #content table.cart td.actions .coupon, .woocommerce-page table.cart td.actions .coupon {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 50%;
+}
+
+.woocommerce #content table.cart td.actions .input-text, .woocommerce table.cart td.actions .input-text, .woocommerce-page #content table.cart td.actions .input-text, .woocommerce-page table.cart td.actions .input-text{
+  width:40%;
+}
+
+.wishlist_table .product-add-to-cart {
+    width: initial;
+    background: initial;
+}
+
+.main-navigation .navigation-general button.wishlist-btn.notauthorized {
+  display: block;
+}
+
+a.wishlist-btn {
+    font-size: 24px;
+    margin-left: 12px;
+    line-height: 0;
+    color: #666;
+}

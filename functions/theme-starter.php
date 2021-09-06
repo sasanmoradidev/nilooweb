@@ -72,8 +72,8 @@ function nilooweb_scripts() {
   wp_enqueue_style( 'bootstrap', get_template_directory_uri() .'/assets/css/desktop/bootstrap.v4.css' );
   wp_enqueue_style( 'carousel.min', get_template_directory_uri() .'/assets/css/desktop/owl.carousel.min.css' );
   wp_enqueue_style( 'styles.min', get_template_directory_uri() .'/assets/css/desktop/styles.min.css' );
+  wp_enqueue_style( 'plp.min', get_template_directory_uri() .'/assets/css/desktop/plp.min.css' );
   wp_enqueue_style( 'style', get_template_directory_uri() .'/assets/css/desktop/style.css' );
-  wp_enqueue_style( 'theme', get_template_directory_uri() .'/assets/css/mobile/theme1.css' );
   }
 }
 add_action( 'wp_enqueue_scripts', 'nilooweb_scripts' );
@@ -95,17 +95,6 @@ function nilooweb_image_sizes(){
 /**
  Custom funtions
 **/
-//price off calculate
-function price_off(){
-  if (get_post_meta( get_the_ID(), '_price', true)){
-  $off = ((get_post_meta( get_the_ID(), '_regular_price', true) - get_post_meta( get_the_ID(), '_price', true)) / get_post_meta( get_the_ID(), '_regular_price', true))* 100;
-  $off = number_format($off);
-  return $off;
-  }
-  else {
-    return '';
-  }
-}
 // header distinguish mobile device
 function header_func(){
   if ( wp_is_mobile() ) {
@@ -258,14 +247,8 @@ class IBenic_Walker extends Walker_Nav_Menu {
     	$description = $item->description;
     	$permalink = $item->url;
     	$classes = $item->classes;
-		if( in_array( 'menu-item-has-children', $classes) ) {
-		  // if item (li) has children
-			$output .= "<li class='custom-drop-down'>";
-		}
-		else{
-			$output .= "<li>";
-		}
 
+			$output .= "<li>";
 
       //Add SPAN if no Permalink
       if( $permalink && $permalink != '#' ) {
@@ -280,7 +263,32 @@ class IBenic_Walker extends Walker_Nav_Menu {
       } else {
       	$output .= '</span>';
       }
+
+      if($depth == 0 && in_array( 'menu-item-has-children', $classes) ){
+        $output .= "<div class='category-details'>";
+        $output .= "<div class='container'>";
+      }
+      if($depth == 0 && in_array( 'menu-item-has-children', $classes)){
+        $output .= "</div'>";
+        $output .= "</div'>";
+      }
     }
+
+    function start_lvl(&$output, $depth = 0, $args = NULL) {
+        $indent = str_repeat("\t", $depth);
+        $output .= "\n$indent<ul class=\"submenu\">\n";
+    }
+
+/*
+    function end_el(&$output, $item, $depth=0, $args=array(), $id = 0) {
+
+      if($depth == 0){
+        $output .= "</div'>";
+        $output .= "</div'>";
+      }
+  		$output .= "</li>";
+    }
+*/
 }
 ?>
 <?php
@@ -319,4 +327,41 @@ class IBenic_Walker2 extends Walker_Nav_Menu {
       }
     }
 }
-?>
+/**
+this code shows php template file is used for the page in bottom of page
+*/
+function meks_which_template_is_loaded() {
+	if ( is_super_admin() ) {
+		global $template;
+    print_r($template);
+	}
+}
+add_action( 'wp_footer', 'meks_which_template_is_loaded' );
+// ****************************
+//pagination
+function wp_pagination($pages = '', $range = 2) {
+    $showitems = ($range * 2)+1;
+    global $paged;
+    if(empty($paged)) $paged = 1;
+    if($pages == '') {
+        global $wp_query;
+        $pages = $wp_query->max_num_pages;
+        if(!$pages) {
+            $pages = 1;
+        }
+    }
+    if($pages != 1) {
+        echo '<div class="netsa-pagination"><ul>';
+        if($paged > 1) echo "<li><a class='previous-page' href='".get_pagenum_link($paged - 1)."'></a></li>";
+        for ($i=1; $i <= $pages; $i++) {
+            if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
+            {
+                echo ($paged == $i)? "<li class='active'><span>".$i."</span></li>":"<li><a href='".get_pagenum_link($i)."' class='inactive' >".$i."</a></li>";
+            }
+        }
+        if ($paged < $pages) echo "<li><a class='next-page' href='".get_pagenum_link($paged + 1)."'></a></li>";
+        echo '</ul></div>';
+    }
+}
+
+// *******

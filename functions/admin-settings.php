@@ -257,15 +257,25 @@
             array(
                 'id'       => 'logo',
                 'type'     => 'media',
-				'url'      => 'true',
+	              'url'      => 'true',
                 'title'    => __( 'Header logo', 'nilooweb' ),
             ),
             array(
                 'id'       => 'favicon',
                 'type'     => 'media',
-				'url'      => 'true',
+	              'url'      => 'true',
                 'title'    => __( 'Fav icon logo', 'nilooweb' ),
             ),
+              array(
+                  'id'       => 'wishlisturl',
+                  'type'     => 'select',
+                  'multi'    => false,
+                  'data'     => 'posts',
+                  'args'     => array( 'post_type' =>  array( 'page' ), 'numberposts' => -1 ),
+                  'title'    => __( 'Featured Post', 'nilooweb' ),
+                  'subtitle' => __( 'Selected post will be displayed in page top menu', 'nilooweb' ),
+                  //'desc'     => __( 'Page will be marked as front for this post type', TD ),
+              ),
         )
     ) );
 

@@ -26,11 +26,11 @@ if ( ! empty( $breadcrumb ) ) {
 	<div class="breadcrumb-container">
 
 <?php
-	echo $wrap_before;
+	// echo $wrap_before;
 
 	foreach ( $breadcrumb as $key => $crumb ) {
 
-		echo $before;
+		// echo $before;
 
 		if ( ! empty( $crumb[1] ) && sizeof( $breadcrumb ) !== $key + 1 ) {
 			echo '<a href="' . esc_url( $crumb[1] ) . '">' . esc_html( $crumb[0] ) . '</a>';
@@ -38,12 +38,11 @@ if ( ! empty( $breadcrumb ) ) {
 			echo '<span class="lastchildcrumb">' . esc_html( $crumb[0] ) . '</span>';
 		}
 
-		echo $after;
-
-	if ( sizeof( $breadcrumb ) !== $key + 1 ) {			echo $delimiter;		}
+		// echo $after;
+	// if ( sizeof( $breadcrumb ) !== $key + 1 ) {			echo $delimiter;		}
 	}
 
-	echo $wrap_after;
+	// echo $wrap_after;
 ?>
 
 	</div>

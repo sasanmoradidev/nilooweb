@@ -23,13 +23,19 @@ global $product;
 if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
+// print_r(get_post_meta( get_the_ID()));
+// print_r($product);
 ?>
 <div class="item">
    <div class="product-card">
     <a href="<?php echo get_the_permalink(); ?>" class="product-card-img-link">
     <img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'products_desktop');?>" alt="<?php echo get_the_title(); ?>" title="<?php echo get_the_title(); ?>" class="product-card-img hover-hide">
     <img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'products_desktop');?>" alt="<?php echo get_the_title(); ?>" title="<?php echo get_the_title(); ?>" class="product-card-img hover-show">
-    <span class="product-card-over-img"></span><span class="product-card-discount"><?php echo '%'.price_off(); ?> </span></a>
+    <span class="product-card-over-img"></span>
+		<?php if(price_off() > 0): ?>
+		<span class="product-card-discount"><?php price_off(); ?> </span>
+	<?php endif; //print_r($product); ?>
+	</a>
     <div class="product-card-hover">
      <ul class="product-card-hover-icon">
       <li class="product-card-like" data-product-id="227481"><?php echo do_shortcode('[yith_wcwl_add_to_wishlist]'); ?></li>
