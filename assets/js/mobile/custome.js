@@ -626,3 +626,62 @@ $(document).ready(function(){
       $(".search-form").submit();
     });
 });
+
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: false,
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+});
+
+$('#share-button').on('click', () => {
+  if (navigator.share) {
+    var myurl = window.location.href;
+    navigator.share({
+        title: 'Web Share API Draft',
+        text: 'Take a look at this spec!',
+        url: myurl,
+      })
+      .then(() => console.log('Successful share'))
+      .catch((error) => console.log('Error sharing', error));
+  } else {
+    console.log('Share not supported on this browser, do it the old way.');
+  }
+});
+
+// mobile single product tabs
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  });
+}
+// related products carousel
+//owl related products option
+var swiperrelated = new Swiper(".swiperrelated", {
+  slidesPerView: 2.35,
+  spaceBetween: 30,
+});

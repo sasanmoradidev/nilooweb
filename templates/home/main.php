@@ -24,6 +24,14 @@ $options = get_option('nilooweb');
 					'post_type' => 'product' ,
 					'posts_per_page' => 3,
 					'post_status ' => 'publish',
+					'offset' => 3,
+					'meta_query' => array(
+						WC()->query->get_meta_query(),
+						 array(
+								 'key' => '_stock_status',
+								 'value' => 'instock'
+						 )
+					 )
 				);
 				$posts = new WP_Query( $args );
 					if( $posts->have_posts() ):
@@ -49,6 +57,13 @@ $options = get_option('nilooweb');
 					'post_type' => 'product' ,
 					'posts_per_page' => 3,
 					'post_status ' => 'publish',
+					'meta_query' => array(
+						WC()->query->get_meta_query(),
+						 array(
+								 'key' => '_stock_status',
+								 'value' => 'instock'
+						 )
+					 )
 				);
 				$posts = new WP_Query( $args );
 				if( $posts->have_posts() ):
@@ -56,7 +71,9 @@ $options = get_option('nilooweb');
 					?>
 
 					<div class="orb">
-						<a href="<?php echo get_the_permalink(); ?>"><img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'slidercarousel');?>" alt="<?php echo get_the_title(); ?>"/></a>
+						<a href="<?php echo get_the_permalink(); ?>">
+							<img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'slidercarousel');?>" alt="<?php echo get_the_title(); ?>"/>
+						</a>
 					</div>
 
 					<?php endwhile;
@@ -105,18 +122,27 @@ $options = get_option('nilooweb');
 				 <div class="title">
 						 <h3>فروش ویژه</h3>
 
-						 <a href="#" class="btn more mybtn">مشاهده همه</a>
+						 <a href="<?php echo get_the_permalink(); ?>" class="btn more mybtn">مشاهده همه</a>
 
 				 </div>
 				 <div class="box p-0">
 						 <div class="owl-carousel owl-theme amazing-slider">
 
 							 <?php
-								$args = array(
-									'post_type' => 'product' ,
-									'posts_per_page' => 3,
-									'post_status ' => 'publish',
-								);
+               $args = array(
+                  'posts_per_page' => 8,
+                  'no_found_rows' => 1,
+                  'post_status' => 'publish',
+                  'post_type' => 'product',
+                  'post__in' => array_merge(array(0), wc_get_product_ids_on_sale()),
+                  'meta_query' => array(
+                    WC()->query->get_meta_query(),
+                     array(
+                         'key' => '_stock_status',
+                         'value' => 'instock'
+                     )
+                   )
+               );
 								$posts = new WP_Query( $args );
 								if( $posts->have_posts() ):
 									while( $posts->have_posts() ) : $posts->the_post();
@@ -124,17 +150,11 @@ $options = get_option('nilooweb');
 
 								 <div class="row">
 										 <div class="col-sm-5 col-6">
-												 <a href="#">
+												 <a href="<?php echo get_the_permalink(); ?>">
 												 <img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'offproducts');?>" width="272" height="354" alt="" /></a>
 										 </div>
 										 <div class="col-sm-7 col-6">
 											 <div class="info">
-												<?php
-												//print_r(get_post_meta( get_the_ID()));
-												//echo get_post_meta( get_the_ID(), '_regular_price', true);
-												$off = ((get_post_meta( get_the_ID(), '_regular_price', true) - get_post_meta( get_the_ID(), '_price', true)) / get_post_meta( get_the_ID(), '_regular_price', true))* 100;
-												$off = number_format($off);
-												 ?>
 												 <div>
 													 <span class="name"><?php echo get_the_title(); ?></span>
 													 <ul class="ul-reset">
@@ -144,9 +164,11 @@ $options = get_option('nilooweb');
 												 </div>
 
 												 <div class="price-info">
-													 <span class="discount badge badge-danger"><?php echo '%'.$off; ?></span>
-													 <span class="price">
-																<?php echo get_post_meta( get_the_ID(), '_price', true); ?> <small>تومان</small></br><span class="old-price"><?php echo get_post_meta( get_the_ID(), '_regular_price', true); ?> <small>تومان</small></span>
+												 	<?php if(price_off()): ?>
+												 	<span class="discount badge badge-danger"><?php echo price_off(); ?></span>
+									 				<?php endif; ?>
+													 <span class="price"><?php echo get_post_meta( get_the_ID(), '_price', true); ?> <small>تومان</small></br>
+													 	<span class="old-price"><?php if(get_post_meta( get_the_ID(), '_regular_price', true)): ?><?php echo get_post_meta( get_the_ID(), '_regular_price', true); ?> <small>تومان</small><?php endif; ?></span>
 													 </span>
 												 </div>
 		 												 <a href="<?php echo get_the_permalink(); ?>" class="btn more mybtn">مشاهده محصول</a>
@@ -165,32 +187,7 @@ $options = get_option('nilooweb');
 		 </section>
  </div>
 
- <section id="shop-features" class="mb-2  pt-1  pb-4">
-		 <div class="container-fluid">
-				 <div class="iconslist w-100">
-
-					 <div class="feature">
-							 <div class="icons ship"></div>
-							 <span>تحویل سریع</span>
-					 </div>
-
-					 <span class="iconborder"></span>
-
-					 <div class="feature">
-							 <div class="icons off"></div>
-							 <span>تخفیف‌های تکرار نشدنی</span>
-					 </div>
-
-					 <span class="iconborder"></span>
-
-					 <div class="feature">
-							 <div class="icons store"></div>
-							 <span>فروش حضوری</span>
-					 </div>
-
-				 </div>
-		 </div>
- </section>
+<?php  get_template_part('templates/mobile/features'); ?>
 
  <div class="container-fluid">
 		 <section class="row mt-4 mb-5" id="brands">
@@ -216,11 +213,19 @@ $options = get_option('nilooweb');
 								 <div class="owl-carousel owl-theme row-slider-carousel">
 
 	 							 <?php
-	 								$args = array(
-	 									'post_type' => 'product' ,
-	 									'posts_per_page' => 3,
-	 									'post_status ' => 'publish',
-	 								);
+	                $args = array(
+	                   'posts_per_page' => 10,
+	                   'no_found_rows' => 1,
+	                   'post_status' => 'publish',
+	                   'post_type' => 'product',
+	                   'meta_query' => array(
+	                     WC()->query->get_meta_query(),
+	                      array(
+	                          'key' => '_stock_status',
+	                          'value' => 'instock'
+	                      )
+	                    )
+	                );
 	 								$posts = new WP_Query( $args );
 	 								if( $posts->have_posts() ):
 	 									while( $posts->have_posts() ) : $posts->the_post();
@@ -246,8 +251,8 @@ $options = get_option('nilooweb');
 
 																</div>
 																<div class="taglike">
-																	<span class="tagcode"><?php echo get_post_meta( get_the_ID(), '_sku', true); ?></span>
-																	<span class="prolike"><? echo do_shortcode('[yith_wcwl_add_to_wishlist]'); ?></span>
+																	<?php if(get_post_meta( get_the_ID(), '_sku', true)): ?><span class="tagcode"><?php echo get_post_meta( get_the_ID(), '_sku', true); ?></span><?php endif; ?>
+																	<span class="prolike"><?php echo do_shortcode('[yith_wcwl_add_to_wishlist]'); ?></span>
 																</div>
 															</div>
 												</div>
@@ -277,21 +282,21 @@ $options = get_option('nilooweb');
 					 $cfull = get_field('category_fullwidth');
 					 $image = get_field('category_image', 'product_cat_' . $cfull->term_id);
 						?>
-						 <a href="#"><img src="<?php echo $image; ?>" alt=""></a>
+						 <a href="<?php echo get_the_permalink(); ?>"><img src="<?php echo $image; ?>" alt=""></a>
 				 </div>
 				 <div class="banner mb-2">
 					 <?php
 					 $cfull = get_field('category_right');
 					 $image = get_field('category_image', 'product_cat_' . $cfull->term_id);
 						?>
-						 <a href="#"><img src="<?php echo $image; ?>" alt=""></a>
+						 <a href="<?php echo get_the_permalink(); ?>"><img src="<?php echo $image; ?>" alt=""></a>
 				 </div>
 				 <div class="banner mb-2">
 					 <?php
 					 $cfull = get_field('category_left');
 					 $image = get_field('category_image', 'product_cat_' . $cfull->term_id);
 						?>
-						 <a href="#"><img src="<?php echo $image; ?>" alt=""></a>
+						 <a href="<?php echo get_the_permalink(); ?>"><img src="<?php echo $image; ?>" alt=""></a>
 				 </div>
 		 </section>
  </div>

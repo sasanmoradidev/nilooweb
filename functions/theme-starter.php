@@ -47,6 +47,7 @@ function nilooweb_scripts() {
 	//Scripts
   if ( wp_is_mobile() ) {
 	wp_enqueue_script( 'libjs', get_template_directory_uri() . '/assets/js/mobile/lib.min.js', array(), '1.0', true );
+	wp_enqueue_script( 'swiper-bundle.min', get_template_directory_uri() . '/assets/js/mobile/swiper-bundle.min.js', array(), '1.0', true );
 	wp_enqueue_script( 'custome', get_template_directory_uri() . '/assets/js/mobile/custome.js', array(), '1.0', true );
   } else {
   wp_enqueue_script( 'myjquery', get_template_directory_uri() . '/assets/js/desktop/jquery.min.js', array(), '1.0', false );
@@ -65,8 +66,8 @@ function nilooweb_scripts() {
   if ( wp_is_mobile() ) {
 	//Styles
   wp_enqueue_style( 'lib.min', get_template_directory_uri() .'/assets/css/mobile/lib.min.css' );
+  wp_enqueue_style( 'swiper-bundle.min', get_template_directory_uri() .'/assets/css/mobile/swiper-bundle.min.css' );
   wp_enqueue_style( 'style', get_template_directory_uri() .'/assets/css/mobile/style.css' );
-  wp_enqueue_style( 'theme', get_template_directory_uri() .'/assets/css/mobile/theme1.css' );
   } else {
 	//Styles
   wp_enqueue_style( 'bootstrap', get_template_directory_uri() .'/assets/css/desktop/bootstrap.v4.css' );
@@ -85,6 +86,9 @@ add_action( 'wp_enqueue_scripts', 'nilooweb_scripts' );
 add_action('after_setup_theme', 'nilooweb_image_sizes');
 function nilooweb_image_sizes(){
     add_image_size( 'slidercarousel', 196, 380, true ); // (cropped)
+    add_image_size( 'mobileswiper', 600, 720, true ); // (cropped)
+    add_image_size( 'mobilerelated', 250, 286, true ); // (cropped)
+    add_image_size( 'mobilecartitems', 350, 420, true ); // (cropped)
     add_image_size( 'offproducts', 696, 936, true ); // (cropped)
     add_image_size( 'products_desktop', 350, 420, true ); // (cropped)
     add_image_size( 'products_desktop_thumb', 70, 93, true ); // (cropped)
@@ -118,6 +122,7 @@ add_action('after_setup_theme', 'nilooweb_menus');
 function nilooweb_menus(){
     register_nav_menus( array(
 		'main'  => __( 'Main Menu', 'nilooweb' ),
+		'category'  => __( 'Mobile Categories Menu', 'nilooweb' ),
 	) );
 }
 /**
@@ -234,8 +239,7 @@ function getLastpostListings($numberOfListings) { //html
 register_widget('Lastpost_Widget');
 /*****end creating custom widget for posts with thumbnails*******/
 
-?>
-<?php
+// nav walker for header menu
 class IBenic_Walker extends Walker_Nav_Menu {
 
 	// Displays start of an element. E.g '<li> Item Name'
@@ -290,8 +294,8 @@ class IBenic_Walker extends Walker_Nav_Menu {
     }
 */
 }
-?>
-<?php
+
+// nav walker for header menu
 class IBenic_Walker2 extends Walker_Nav_Menu {
 
 	// Displays start of an element. E.g '<li> Item Name'
@@ -303,14 +307,8 @@ class IBenic_Walker2 extends Walker_Nav_Menu {
     	$description = $item->description;
     	$permalink = $item->url;
     	$classes = $item->classes;
-		if( in_array( 'menu-item-has-children', $classes) ) {
-		  // if item (li) has children
-			$output .= "<li class='nav__list-item nav__list-dropdown'>";
-		}
-		else{
-			$output .= "<li class='nav__list-item'>";
-		}
 
+			$output .= "<li>";
 
       //Add SPAN if no Permalink
       if( $permalink && $permalink != '#' ) {
@@ -325,7 +323,24 @@ class IBenic_Walker2 extends Walker_Nav_Menu {
       } else {
       	$output .= '</span>';
       }
+
     }
+
+    function start_lvl(&$output, $depth = 0, $args = NULL) {
+        $indent = str_repeat("\t", $depth);
+        $output .= "\n$indent<ul>\n";
+    }
+
+/*
+    function end_el(&$output, $item, $depth=0, $args=array(), $id = 0) {
+
+      if($depth == 0){
+        $output .= "</div'>";
+        $output .= "</div'>";
+      }
+  		$output .= "</li>";
+    }
+*/
 }
 /**
 this code shows php template file is used for the page in bottom of page
@@ -336,8 +351,10 @@ function meks_which_template_is_loaded() {
     print_r($template);
 	}
 }
-add_action( 'wp_footer', 'meks_which_template_is_loaded' );
+// enable this for activate
+//add_action( 'wp_footer', 'meks_which_template_is_loaded' );
 // ****************************
+
 //pagination
 function wp_pagination($pages = '', $range = 2) {
     $showitems = ($range * 2)+1;
@@ -351,16 +368,16 @@ function wp_pagination($pages = '', $range = 2) {
         }
     }
     if($pages != 1) {
-        echo '<div class="netsa-pagination"><ul>';
-        if($paged > 1) echo "<li><a class='previous-page' href='".get_pagenum_link($paged - 1)."'></a></li>";
+        echo '<ul class="pagination">';
+        if($paged > 1) echo "<li class='pagination-prev'><a class='pagination-item' href='".get_pagenum_link($paged - 1)."'>صفحه قبل</a></li>";
         for ($i=1; $i <= $pages; $i++) {
             if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
             {
-                echo ($paged == $i)? "<li class='active'><span>".$i."</span></li>":"<li><a href='".get_pagenum_link($i)."' class='inactive' >".$i."</a></li>";
+                echo ($paged == $i)? "<li class='pagination-item active'><a class='pagination-link'>".$i."</a></li>":"<li class='pagination-item'><a class='pagination-link' href='".get_pagenum_link($i)."' class='inactive' >".$i."</a></li>";
             }
         }
-        if ($paged < $pages) echo "<li><a class='next-page' href='".get_pagenum_link($paged + 1)."'></a></li>";
-        echo '</ul></div>';
+        if ($paged < $pages) echo "<li class='pagination-next'><a class='pagination-item' href='".get_pagenum_link($paged + 1)."'>صفحه بعد</a></li>";
+        echo '</ul>';
     }
 }
 

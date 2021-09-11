@@ -240,3 +240,28 @@ function woocommerce_catalog_ordering() {
 add_action('woocommerce_before_shop_loop_ordering', 'woocommerce_catalog_ordering',10);
 
 //*********
+// remove select country field from woocommecer form account
+add_filter( 'woocommerce_checkout_fields' , 'quadlayers_remove_checkout_fields' );
+
+function quadlayers_remove_checkout_fields( $fields ) {
+
+unset($fields['billing']['billing_country']);
+
+return $fields;
+
+}
+// mobile add to cart and price
+add_action('mobile_add_to_cart_price', 'woocommerce_template_single_price', 10);
+add_action('mobile_add_to_cart', 'woocommerce_template_single_add_to_cart', 10);
+
+//remove quantity from product single page
+if ( wp_is_mobile() ) {
+  add_action( 'wp_head', 'quantity_wp_head' );
+  function quantity_wp_head() {
+    if ( is_product() ) {
+        ?>
+        <style type="text/css">.quantity, .buttons_added { width:0; height:0; display: none; visibility: hidden; }</style>
+        <?php
+    }
+  }
+}

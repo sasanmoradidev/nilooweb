@@ -19,8 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-get_header( 'shop' ); ?>
+header_func(); ?>
+<?php
+if ( wp_is_mobile() ) {	?>
 
+	<?php wc_get_template( 'mobile/content-single-product.php' ); ?>
+
+
+<?php } else { ?>
 	<?php
 		/**
 		 * woocommerce_before_main_content hook.
@@ -57,6 +63,7 @@ get_header( 'shop' ); ?>
 	?>
 
 <?php
-get_footer( 'shop' );
+}
+footer_func();
 
 /* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */

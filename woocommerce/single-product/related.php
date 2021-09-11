@@ -20,6 +20,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( $related_products ) : ?>
+<?php
+if ( wp_is_mobile() ) {
+
+	$heading = apply_filters( 'woocommerce_product_related_products_heading', __( 'Related products', 'woocommerce' ) );
+	if ( $heading ) : ?>
+		<div class="sc-ipZHIp gOltDa"><div class="sc-chbbiW exWmKP"><h4 class="sc-fcdeBU hYElEC"><?php echo esc_html( $heading ); ?></h4></div></div>
+<?php endif; ?>
+<div class="sc-fnwBNb fgGpwF">
+	<div class="swiperrelated">
+		<div class="swiper-wrapper">
+
+			<?php foreach ( $related_products as $related_product ) : ?>
+
+					<?php
+					$post_object = get_post( $related_product->get_id() );
+
+					setup_postdata( $GLOBALS['post'] =& $post_object ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
+					// print_r($related_products);
+						wc_get_template_part( 'content', 'related-mobile' );
+					?>
+
+			<?php endforeach; ?>
+
+		</div>
+	</div>
+</div>
+
+<?php } else {
+?>
 	<div id="home-bani-suggest">
 		<?php
 		$heading = apply_filters( 'woocommerce_product_related_products_heading', __( 'Related products', 'woocommerce' ) );
@@ -50,8 +79,7 @@ if ( $related_products ) : ?>
 
 						setup_postdata( $GLOBALS['post'] =& $post_object ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
 						// print_r($related_products);
-
-						wc_get_template_part( 'content', 'related' );
+							wc_get_template_part( 'content', 'related' );
 						?>
 
 				<?php endforeach; ?>
@@ -66,6 +94,7 @@ if ( $related_products ) : ?>
 		</div>
 	</div>
 	<?php
+}
 endif;
 
 wp_reset_postdata();

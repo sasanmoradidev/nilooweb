@@ -44,7 +44,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
       </div>
     </a>
     <p><a href="<?php echo get_the_permalink(); ?>" class="product-card-brand-lastprice">
-			<span class="product-card-brand">کد 11733312</span>
+			<span class="product-card-brand"><?php if(get_post_meta( get_the_ID(), '_sku', true)) : echo 'کد محصول: ' . get_post_meta( get_the_ID(), '_sku', true); else: echo '<span>کد ثبت نشده است</span>'; endif; ?></span>
 			<?php if(get_post_meta( get_the_ID(), '_onsale_price', true)): ?><span class="product-card-lastprice"><?php echo get_post_meta( get_the_ID(), '_regular_price', true); ?> تومان</span><?php endif; ?>
 		</a>
     </p>

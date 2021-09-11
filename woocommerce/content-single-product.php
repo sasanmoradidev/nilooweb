@@ -44,6 +44,7 @@ if ( post_password_required() ) {
 	do_action( 'woocommerce_before_single_product_summary' );
 	?>
 	</div>
+
 	<div class="col-6">
 		<div class="product-summary-section">
 			<div class="product-name-price-share">

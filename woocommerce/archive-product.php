@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-get_header( 'shop' );
+header_func();
 
 /**
  * Hook: woocommerce_before_main_content.
@@ -84,7 +84,10 @@ if ( woocommerce_product_loop() ) {
 do_action( 'woocommerce_sidebar' );
 ?>
 </fieldset></div>
+<?php
+wp_pagination();
 
+?>
 <div class="product_list grid af-product-list row" style="" id="product_list">
 <?php
 	woocommerce_product_loop_start();
@@ -116,7 +119,8 @@ do_action( 'woocommerce_sidebar' );
 	 *
 	 * @hooked woocommerce_pagination - 10
 	 */
-	do_action( 'woocommerce_after_shop_loop' );
+	// do_action( 'woocommerce_after_shop_loop' );
+	wp_pagination();
 ?>
 </div>
 <?php
@@ -135,4 +139,4 @@ do_action( 'woocommerce_sidebar' );
  */
 do_action( 'woocommerce_after_main_content_archive' );
 
-get_footer( 'shop' );
+footer_func();
